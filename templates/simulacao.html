@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simulação de Gás Ideal</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+        margin: 0;
+      }
+
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+      }
+
+      .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .header img {
+        max-width: 300px;
+        height: auto;
+        margin-bottom: 15px;
+      }
+
+      .header h2 {
+        color: #2c3e50;
+        margin: 10px 0;
+      }
+
+      .header p {
+        font-size: 14px;
+        color: #555;
+        margin: 4px 0;
+        text-align: center;
+      }
+
+      .form-container {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 20px 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      label {
+        margin-right: 5px;
+        font-weight: bold;
+      }
+
+      select,
+      button {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      .grafico-container {
+        text-align: center;
+        max-width: 90vw;
+      }
+
+      #grafico {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-top: 10px;
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <img src="/static/LogoCefet.jpg" alt="Logo CEFET" />
+
+      <h2>Simulação de Gás Ideal 2D</h2>
+
+      <p><strong>Projeto de Termodinâmica Computacional</strong></p>
+      <p><strong>Docente:</strong> Prof. Dr. Felipe Mondaini</p>
+      <p>
+        <strong>Discente:</strong> Carlos Eduardo Dias Silva<br />
+        <a href="mailto:carlos.silva.13@aluno.cefet-rj.br" style="color: #2980b9; text-decoration: none;">
+          carlos.silva.13@aluno.cefet-rj.br
+        </a>
+      </p>
+    </div>
+
+    <h1>Parâmetros da Simulação</h1>
+
+    <div class="form-container">
+      <div>
+        <label for="n">Partículas (n):</label>
+        <select id="n">
+          <option value="1">1</option>
+          <option value="10">10</option>
+          <option value="100">100</option>
+          <option value="1000">1.000</option>
+          <option value="5000" selected>5.000</option>
+          <option value="10000">10.000</option>
+          <option value="50000">50.000</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="k">Trajetórias (k):</label>
+        <select id="k">
+          <option value="1">1</option>
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="40">40</option>
+        </select>
+      </div>
+
+      <button onclick="atualizarGrafico()">Executar Simulação</button>
+    </div>
+
+    <div class="grafico-container">
+      <p><strong>Gráfico da Simulação:</strong></p>
+      <img id="grafico" src="" alt="Gráfico da Simulação" />
+    </div>
+
+    <script>
+      function atualizarGrafico() {
+        const n = document.getElementById("n").value;
+        const k = document.getElementById("k").value;
+        const img = document.getElementById("grafico");
+
+        if (parseInt(k) > parseInt(n)) {
+          alert("O número de trajetórias (k) não pode ser maior que o número de partículas (n).");
+          return;
+        }
+
+        const timestamp = new Date().getTime(); // evita cache
+        img.src = `/simulacao/plot.png?n=${n}&k=${k}&t=${timestamp}`;
+      }
+
+      window.onload = atualizarGrafico;
+    </script>
+  </body>
+</html>
